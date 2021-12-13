@@ -5,6 +5,8 @@ class Bits{
         int max_xor = trie.findMaxXor(new int[]{9,5,3});
         System.out.println("min xor: "+min_xor);
         System.out.println("max xor: "+max_xor);
+        int max_subarray_xor = trie.findMaxSubarrayXor(new int[]{8,1,2,12,6,7});
+        System.out.println("max subarry xor: "+max_subarray_xor);
     }
 }
 
@@ -86,6 +88,18 @@ class TrieBitStruct{
         for(int i=1;i<arr.length;i++){
             max_xor = Math.max(max_xor,currMaxXor(arr[i]));
             insert(arr[i]);
+        }
+        return max_xor;
+    }
+    int findMaxSubarrayXor(int[] arr) {
+        int max_xor = arr[0];
+        insert(arr[0]);
+        int prefix_xor = arr[0];
+        for(int i = 1;i<arr.length;i++) {
+            prefix_xor = prefix_xor ^ arr[i];
+            max_xor = Math.max(max_xor,prefix_xor);
+            max_xor = Math.max(max_xor,currMaxXor(prefix_xor));
+            insert(prefix_xor);
         }
         return max_xor;
     }
